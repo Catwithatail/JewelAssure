@@ -23,7 +23,7 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 
 ## Tech Stack
 
-- **Blockchain Platform:** Ethereum/Polygon
+- **Blockchain Platform:** Ethereum
 - **Storage Solution:** FileCoin for decentralized storage
 - **Frontend:** React.js
 - **Backend:** Node.js, Express
