@@ -1,5 +1,7 @@
 nav {
   background-color: #814287;
+  position: fixed;
+  top: 0;
   color: #fff;
   display: flex;
   flex-wrap: wrap;

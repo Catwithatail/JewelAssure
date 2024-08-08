@@ -1,0 +1,36 @@
+.input-bar-container {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.input-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-bar:focus {
+  border-color: #6a02c4;
+}
+
+.input-bar-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4a254d;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-bar-button:hover {
+  background-color: #923c9a;
+}

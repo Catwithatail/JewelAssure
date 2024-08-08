@@ -1,14 +1,12 @@
 import Navbar from "@/components/Homepage/navbar";
 import Footer from "@/components/Homepage/footer";
-import card from "@/components/products/card";
 import styles from "@/app/page.css";
 
 export default function Home() {
   return (
     <div>
       <Navbar />
-      <card />
-      <div className="title">JewelAssure</div>
+      <div className="titlem">JewelAssure</div>
       <div className="titlecont">
         Ensuring Transparency and Authencty in jewelry
       </div>
@@ -39,7 +37,7 @@ export default function Home() {
           giving you confidence in your investment.
         </div>
       </div>
-
+      <card />
       <Footer />
     </div>
   );
