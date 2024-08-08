@@ -1,0 +1,87 @@
+.box {
+  background-color: #ffffff;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #b1b1b1;
+  padding: 30px 25px 20px 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.sign-in-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 380px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.sign-in-button,
+.google-button {
+  width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.sign-in-button {
+  background-color: #2b005b;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.sign-in-button:hover {
+  background-color: #5a00b5;
+}
+
+.google-button {
+  background-color: #4285f4;
+  color: #fff;
+}
+
+.google-button:hover {
+  background-color: #357ae8;
+}
+
+.Signupdiv {
+  height: 30px;
+  text-align: center;
+  padding: 10px 0 0 0;
+}
+
+.Signup {
+  color: #0d32b6;
+  text-decoration: none;
+  align-items: center;
+  font-size: 14px;
+}
+
+.Signup:hover {
+  color: #4f73f4;
+}
