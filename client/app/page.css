@@ -21,17 +21,46 @@
 }
 
 .gs {
+  padding-top: 5px;
   text-align: center;
 }
 
 .gs button {
   color: #fff;
   text-decoration: none;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border-radius: 20px;
   font-size: 14px;
-  background-color: #5c2b62;
+  background-color: #72357a;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 10px;
+}
+
+.title2 {
+  padding-top: 15px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.contain {
+  width: 63.2vw;
+  text-align: center;
+  padding: 0 180px;
+  font-size: medium;
+  overflow-y: hidden;
+}
+
+.c1 {
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.c2 {
+  padding-top: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 30px;
 }
