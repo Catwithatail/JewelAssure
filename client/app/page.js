@@ -1,10 +1,12 @@
 import Navbar from "@/components/Homepage/navbar";
 import Footer from "@/components/Homepage/footer";
+import Index from ".";
 import styles from "@/app/page.css";
 
 export default function Home() {
   return (
     <div>
+      <Index />
       <Navbar />
       <div className="titlem">JewelAssure</div>
       <div className="titlecont">

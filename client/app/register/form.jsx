@@ -22,7 +22,6 @@ const Form = () => {
   const [formData, setFormData] = useState({
     weight: "",
     hallmark: "",
-    origin: "",
     manufacturer: "",
     designer: "",
     purity: "",
@@ -64,7 +63,6 @@ const Form = () => {
       {[
         { name: "weight", placeholder: "Weight" },
         { name: "hallmark", placeholder: "Hallmark" },
-        { name: "origin", placeholder: "Origin" },
         { name: "manufacturer", placeholder: "Manufacturer" },
         { name: "designer", placeholder: "Designer" },
         { name: "purity", placeholder: "Purity" },
