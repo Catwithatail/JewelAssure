@@ -1,6 +1,59 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
 import "./form.css"; // Import the CSS file
+
+const JewelaryABI = {
+  "_format": "hh-sol-artifact-1",
+  "contractName": "JewelryManagement",
+  "sourceName": "contracts/JewelryManagement.sol",
+  "address": "0xBe2249d2fe3Ac5d3c3c7994658026b4b29E5ABed",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_weight",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_hallmark",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_originDetails",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_manufacturerDetails",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_designerDetails",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_purity",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_metalDetails",
+          "type": "string[]"
+        }
+      ],
+      "name": "addJewelry",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+};
 
 // Reusable Input Component
 const InputField = ({ name, value, onChange, error, placeholder }) => (
@@ -22,6 +75,7 @@ const Form = () => {
   const [formData, setFormData] = useState({
     weight: "",
     hallmark: "",
+    originDetails: "",
     manufacturer: "",
     designer: "",
     purity: "",
@@ -29,6 +83,7 @@ const Form = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [contract, setContract] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -50,23 +105,61 @@ const Form = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      alert("Form submitted successfully!");
-      // Further processing, like sending data to a server
+    if (validateForm() && contract) {
+      try {
+        const tx = await contract.addJewelry(
+          ethers.utils.parseUnits(formData.weight, "wei"),
+          formData.hallmark,
+          formData.originDetails,
+          formData.manufacturer,
+          formData.designer,
+          ethers.utils.parseUnits(formData.purity, "wei"),
+          formData.metal.split(",").map((metal) => metal.trim())
+        );
+        await tx.wait();
+        alert("Jewelry added successfully!");
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Failed to add jewelry.");
+      }
     }
   };
+
+  useEffect(() => {
+    const fetchContract = async () => {
+      if (window.ethereum) {
+        try {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+          const contractInstance = new ethers.Contract(
+            JewelaryABI.address,
+            JewelaryABI.abi,
+            signer
+          );
+          setContract(contractInstance);
+        } catch (err) {
+          console.error("Error connecting to contract:", err);
+        }
+      } else {
+        alert("Please install MetaMask!");
+      }
+    };
+    fetchContract();
+  }, []);
 
   return (
     <form className="jewelry-form" onSubmit={handleSubmit}>
       {[
-        { name: "weight", placeholder: "Weight" },
+        { name: "weight", placeholder: "Weight (in grams)" },
         { name: "hallmark", placeholder: "Hallmark" },
+        { name: "originDetails", placeholder: "Origin Details" },
         { name: "manufacturer", placeholder: "Manufacturer" },
         { name: "designer", placeholder: "Designer" },
-        { name: "purity", placeholder: "Purity" },
-        { name: "metal", placeholder: "Metal" },
+        { name: "purity", placeholder: "Purity (e.g. 999 for 24K gold)" },
+        { name: "metal", placeholder: "Metal (comma-separated)" },
       ].map((field) => (
         <InputField
           key={field.name}
