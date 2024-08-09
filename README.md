@@ -15,7 +15,6 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 - **Secure Data Storage:** Jewelry information is stored on the blockchain, ensuring immutability and security.
 - **Smart Contracts:** Smart contracts handle the recording and verification of jewelry data.
 - **User-Friendly Interface:** A web-based interface allows users to easily interact with the DApp.
-- **QR Code Verification:** Users can quickly verify jewelry authenticity by scanning a QR code.
 
 ## Tech Stack
 
@@ -24,7 +23,7 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 - **Frontend:** React.js
 - **Backend:** Node.js, Express
 - **Smart Contracts:** Solidity
-- **Deployment:** IPFS for decentralized hosting
+- **Deployment:** Hardhet for decentralized hosting
 
 ## Installation and Setup
 
@@ -32,8 +31,6 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 
 - Node.js
 - Truffle
-- Ganache
-- MetaMask
 
 ### Smart Contract Deployment
 
@@ -41,7 +38,7 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 
    ```bash
    git clone https://github.com/amanraj069/JewelAssure
-   cd jewelry-authentication-dapp
+   cd client
    ```
 
 2. Install dependencies:
@@ -83,5 +80,5 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 
 2. **Verify Jewelry:**
    - Navigate to the verification page.
-   - Scan the QR code or enter the unique identifier of the jewelry.
+   - Enter the unique identifier of the jewelry.
    - View the recorded details to verify authenticity.
