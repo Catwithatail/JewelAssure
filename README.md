@@ -38,7 +38,7 @@ Our DApp leverages blockchain to store and verify jewelry information. Each piec
 
    ```bash
    git clone https://github.com/amanraj069/JewelAssure
-   cd jewelry-authentication-dapp
+   cd client
    ```
 
 2. Install dependencies:
