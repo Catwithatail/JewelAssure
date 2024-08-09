@@ -4,55 +4,55 @@ import { ethers } from "ethers";
 import "./form.css"; // Import the CSS file
 
 const JewelaryABI = {
-  "_format": "hh-sol-artifact-1",
-  "contractName": "JewelryManagement",
-  "sourceName": "contracts/JewelryManagement.sol",
-  "address": "0xBe2249d2fe3Ac5d3c3c7994658026b4b29E5ABed",
-  "abi": [
+  _format: "hh-sol-artifact-1",
+  contractName: "JewelryManagement",
+  sourceName: "contracts/JewelryManagement.sol",
+  address: "0xBe2249d2fe3Ac5d3c3c7994658026b4b29E5ABed",
+  abi: [
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "_weight",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_weight",
+          type: "uint256",
         },
         {
-          "internalType": "string",
-          "name": "_hallmark",
-          "type": "string"
+          internalType: "string",
+          name: "_hallmark",
+          type: "string",
         },
         {
-          "internalType": "string",
-          "name": "_originDetails",
-          "type": "string"
+          internalType: "string",
+          name: "_originDetails",
+          type: "string",
         },
         {
-          "internalType": "string",
-          "name": "_manufacturerDetails",
-          "type": "string"
+          internalType: "string",
+          name: "_manufacturerDetails",
+          type: "string",
         },
         {
-          "internalType": "string",
-          "name": "_designerDetails",
-          "type": "string"
+          internalType: "string",
+          name: "_designerDetails",
+          type: "string",
         },
         {
-          "internalType": "uint256",
-          "name": "_purity",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_purity",
+          type: "uint256",
         },
         {
-          "internalType": "string[]",
-          "name": "_metalDetails",
-          "type": "string[]"
-        }
+          internalType: "string[]",
+          name: "_metalDetails",
+          type: "string[]",
+        },
       ],
-      "name": "addJewelry",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
+      name: "addJewelry",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ],
 };
 
 // Reusable Input Component
@@ -118,8 +118,15 @@ const Form = () => {
           ethers.utils.parseUnits(formData.purity, "wei"),
           formData.metal.split(",").map((metal) => metal.trim())
         );
-        await tx.wait();
-        alert("Jewelry added successfully!");
+
+        const receipt = await tx.wait();
+
+        const event = receipt.events.find(
+          (event) => event.event === "JewelryAdded"
+        );
+        const uniqueId = event.args[0];
+
+        alert(`Jewelry added successfully! Unique ID: ${uniqueId}`);
       } catch (err) {
         console.error("Error:", err);
         alert("Failed to add jewelry.");
