@@ -3,52 +3,29 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import "./form.css"; // Import the CSS file
 
-const JewelaryABI = {
+const JewelryABI = {
   _format: "hh-sol-artifact-1",
   contractName: "JewelryManagement",
   sourceName: "contracts/JewelryManagement.sol",
-  address: "0xBe2249d2fe3Ac5d3c3c7994658026b4b29E5ABed",
+  address: "0xf984D90474126B7BB7014Bed1349f8dA018CFffe",
   abi: [
     {
       inputs: [
-        {
-          internalType: "uint256",
-          name: "_weight",
-          type: "uint256",
-        },
-        {
-          internalType: "string",
-          name: "_hallmark",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "_originDetails",
-          type: "string",
-        },
+        { internalType: "string", name: "_name", type: "string" },
+        { internalType: "uint256", name: "_price", type: "uint256" },
+        { internalType: "uint256", name: "_weight", type: "uint256" },
+        { internalType: "string", name: "_hallmark", type: "string" },
         {
           internalType: "string",
           name: "_manufacturerDetails",
           type: "string",
         },
-        {
-          internalType: "string",
-          name: "_designerDetails",
-          type: "string",
-        },
-        {
-          internalType: "uint256",
-          name: "_purity",
-          type: "uint256",
-        },
-        {
-          internalType: "string[]",
-          name: "_metalDetails",
-          type: "string[]",
-        },
+        { internalType: "string", name: "_designerDetails", type: "string" },
+        { internalType: "uint256", name: "_purity", type: "uint256" },
+        { internalType: "string[]", name: "_metalDetails", type: "string[]" },
       ],
       name: "addJewelry",
-      outputs: [],
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
       stateMutability: "nonpayable",
       type: "function",
     },
@@ -73,9 +50,10 @@ const InputField = ({ name, value, onChange, error, placeholder }) => (
 
 const Form = () => {
   const [formData, setFormData] = useState({
+    name: "",
+    price: "",
     weight: "",
     hallmark: "",
-    originDetails: "",
     manufacturer: "",
     designer: "",
     purity: "",
@@ -104,15 +82,15 @@ const Form = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm() && contract) {
       try {
         const tx = await contract.addJewelry(
+          formData.name,
+          ethers.utils.parseUnits(formData.price, "wei"),
           ethers.utils.parseUnits(formData.weight, "wei"),
           formData.hallmark,
-          formData.originDetails,
           formData.manufacturer,
           formData.designer,
           ethers.utils.parseUnits(formData.purity, "wei"),
@@ -120,13 +98,25 @@ const Form = () => {
         );
 
         const receipt = await tx.wait();
+        console.log("Transaction Receipt:", receipt);
 
+        // Check all emitted events
+        console.log("All events:", receipt.events);
+
+        // Try to find the JewelryAdded event
         const event = receipt.events.find(
           (event) => event.event === "JewelryAdded"
         );
-        const uniqueId = event.args[0];
 
-        alert(`Jewelry added successfully! Unique ID: ${uniqueId}`);
+        if (event) {
+          const uniqueId = event.args[0].toString(); // Convert BigNumber to string
+          alert(`Jewelry added successfully! Unique ID: ${uniqueId}`);
+        } else {
+          console.warn(
+            "JewelryAdded event not found in the transaction receipt."
+          );
+          alert("Jewelry added, but the unique ID could not be retrieved.");
+        }
       } catch (err) {
         console.error("Error:", err);
         alert("Failed to add jewelry.");
@@ -142,8 +132,8 @@ const Form = () => {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
           const contractInstance = new ethers.Contract(
-            JewelaryABI.address,
-            JewelaryABI.abi,
+            JewelryABI.address,
+            JewelryABI.abi,
             signer
           );
           setContract(contractInstance);
@@ -160,9 +150,10 @@ const Form = () => {
   return (
     <form className="jewelry-form" onSubmit={handleSubmit}>
       {[
+        { name: "name", placeholder: "Name" },
+        { name: "price", placeholder: "Price (in ETH)" },
         { name: "weight", placeholder: "Weight (in grams)" },
         { name: "hallmark", placeholder: "Hallmark" },
-        { name: "originDetails", placeholder: "Origin Details" },
         { name: "manufacturer", placeholder: "Manufacturer" },
         { name: "designer", placeholder: "Designer" },
         { name: "purity", placeholder: "Purity (e.g. 999 for 24K gold)" },
